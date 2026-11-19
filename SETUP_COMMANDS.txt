@@ -1,0 +1,37 @@
+W STORIES — WINDOWS / XAMPP SETUP
+
+1. Extract ZIP and open W_Articles_Laravel_Project in VS Code (the folder with artisan).
+2. Start MySQL in XAMPP. Create first_project in phpMyAdmin if it does not exist.
+3. Fresh installation only: Copy-Item .env.example .env
+4. Edit .env with your MySQL settings.
+5. Fresh installation only: php artisan key:generate
+   Existing installation: keep the original APP_KEY and .env.
+6. composer install
+7. php artisan migrate
+8. php artisan permission:cache-reset
+9. php artisan storage:link
+10. php artisan optimize:clear
+11. php artisan serve
+
+PAGES
+Public blog:  http://127.0.0.1:8000/
+Login:        http://127.0.0.1:8000/login
+Register:     http://127.0.0.1:8000/register
+Dashboard:    http://127.0.0.1:8000/dashboard
+Articles:     http://127.0.0.1:8000/articles
+Team members: http://127.0.0.1:8000/users
+Roles:        http://127.0.0.1:8000/roles
+Permissions:  http://127.0.0.1:8000/permissions
+
+Read ROLE_PERMISSION_GUIDE.md for the role checklist explanation.
+
+MAKE YOUR ACCOUNT SUPER ADMIN
+PowerShell: php artisan tinker
+Inside Tinker:
+$user = App\Models\User::where('email', 'YOUR_EMAIL@example.com')->firstOrFail();
+$user->syncRoles(['super-admin']);
+$user->getRoleNames();
+exit
+
+New registrations are normal Users. Do not type PHP commands directly into PowerShell; use Tinker.
+Do not run migrate:fresh. It deletes existing tables and data.
